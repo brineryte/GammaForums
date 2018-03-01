@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using GammaForums.Data;
 using GammaForums.Services;
 using GammaForums.Data.Models;
+using GammaForums.Service;
 
 namespace GammaForums
 {
@@ -31,6 +32,7 @@ namespace GammaForums
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IForum, ForumService>();
 
             services.AddMvc();
         }
