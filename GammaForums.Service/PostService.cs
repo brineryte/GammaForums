@@ -5,6 +5,7 @@ using System.Text;
 using GammaForums.Data.Models;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace GammaForums.Service
 {
@@ -39,7 +40,11 @@ namespace GammaForums.Service
 
         public Post GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Posts.Where(post => post.Id == id)
+                .Include(post => post.User)
+                .Include(post => post.Replies).ThenInclude(reply => reply.User)
+                .Include(Post => Post.Forum)
+                .First();
         }
 
         public IEnumerable<Post> GetFilteredPosts(string searchQuery)
