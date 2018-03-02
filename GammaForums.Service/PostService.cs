@@ -43,7 +43,7 @@ namespace GammaForums.Service
             return _context.Posts.Where(post => post.Id == id)
                 .Include(post => post.User)
                 .Include(post => post.Replies).ThenInclude(reply => reply.User)
-                .Include(Post => Post.Forum)
+                .Include(post => post.Forum)
                 .First();
         }
 
