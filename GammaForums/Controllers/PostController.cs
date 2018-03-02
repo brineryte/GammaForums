@@ -51,24 +51,27 @@ namespace GammaForums.Controllers
         public async Task<IActionResult> AddPost(NewPostModel model)
         {
             var userId = _userManager.GetUserId(User);
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = _userManager.FindByIdAsync(userId).Result;
             var post = BuildPost(model, user);
 
-            await _postService.Add(post);
+            _postService.Add(post).Wait(); //Block current thread until task is complete
 
             //TODO implement user rating management here
 
-            return RedirectToAction("Index", "Post", post.Id);
+            return RedirectToAction("Index", "Post", new { id = post.Id });
         }
 
         private Post BuildPost(NewPostModel model, ApplicationUser user)
         {
+            var forum = _forumService.GetById(model.ForumId);
+
             return new Post
             {
                 Title = model.Title,
                 Content = model.Content,
                 Created = DateTime.Now,
-                User = user
+                User = user,
+                Forum = forum
             };
         }
 
