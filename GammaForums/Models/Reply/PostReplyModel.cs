@@ -14,6 +14,7 @@ namespace GammaForums.Models.Reply
         public string AuthorImageURL { get; set; }
         public DateTime Created { get; set; }
         public string ReplyContent { get; set; }
+        public bool IsAuthorAdmin { get; set; }
 
         public int PostId { get; set; }
     }

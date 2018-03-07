@@ -41,11 +41,16 @@ namespace GammaForums.Controllers
                 AuthorRating = post.User.Rating,
                 Created = post.Created,
                 PostContent = post.Content,
-                Replies = replies
+                Replies = replies,
+                ForumId = post.Forum.Id,
+                ForumName = post.Forum.Title,
+                IsAuthorAdmin = IsAuthorAdmin(post.User)
             };
 
             return View(model);
         }
+
+       
 
         [HttpPost]
         public async Task<IActionResult> AddPost(NewPostModel model)
@@ -59,20 +64,6 @@ namespace GammaForums.Controllers
             //TODO implement user rating management here
 
             return RedirectToAction("Index", "Post", new { id = post.Id });
-        }
-
-        private Post BuildPost(NewPostModel model, ApplicationUser user)
-        {
-            var forum = _forumService.GetById(model.ForumId);
-
-            return new Post
-            {
-                Title = model.Title,
-                Content = model.Content,
-                Created = DateTime.Now,
-                User = user,
-                Forum = forum
-            };
         }
 
         public IActionResult Create(int id)
@@ -91,6 +82,26 @@ namespace GammaForums.Controllers
             return View(model);
         }
 
+        private bool IsAuthorAdmin(ApplicationUser user)
+        {
+            return _userManager.GetRolesAsync(user)
+                .Result.Contains("Admin");
+        }
+
+        private Post BuildPost(NewPostModel model, ApplicationUser user)
+        {
+            var forum = _forumService.GetById(model.ForumId);
+
+            return new Post
+            {
+                Title = model.Title,
+                Content = model.Content,
+                Created = DateTime.Now,
+                User = user,
+                Forum = forum
+            };
+        }
+
         private IEnumerable<PostReplyModel> BuildPostReplies(IEnumerable<PostReply> replies)
         {
             return replies.Select(reply => new PostReplyModel
@@ -101,7 +112,8 @@ namespace GammaForums.Controllers
                 AuthorImageURL = reply.User.ProfileImageURL,
                 AuthorRating = reply.User.Rating,
                 Created = reply.Created,
-                ReplyContent = reply.Content
+                ReplyContent = reply.Content,
+                IsAuthorAdmin = IsAuthorAdmin(reply.User)
             });
         }
     }
