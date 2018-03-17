@@ -2,11 +2,12 @@
     padding: 50px 0 20px 0;
     background-color: #EEE;
     background-image: url("/images/theme/bg-01.png");
-    background-size: 100% auto;
+    background-size: 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    color: #EEE;
+    background-size:cover;
+    color:black;
 }
 
 .navbar {
@@ -19,7 +20,7 @@
     background-repeat: no-repeat;
     background-position: center;
     padding-right: 16px;
-    width: 40px;
+    width: 50px;
     margin-right: 12px;
 }
 
@@ -54,7 +55,7 @@
 }
 
 .frontPageSplash {
-    
+    background-image: linear-gradient(to right, rgba(81,141,75, 1), rgba(81,141,75,0));
     background-repeat: no-repeat;
     background-position: right;
 }
@@ -86,6 +87,7 @@
 }
 
 .homeSearch {
+    color: #03A9F4;
     width: 100%;
     margin-top: 8px;
     background: rgba(0, 0, 0, 0.1);
@@ -102,7 +104,7 @@
         border: none !important;
         outline: none !important;
         transition: ease-in 0.2s;
-        color: #03A9F4;
+        
         background-color: rgba(0, 0, 0, 0.7);
         box-shadow: 0 5px 4px -6px #000;
     }
@@ -220,7 +222,7 @@
 
 /* Custom Buttons*/
 .btn-back {
-    background-color: #555;
+    background-color: rgba(81,141,75, 1);
     color: #fff !important;
     transition: ease-in 0.1s;
     border-radius: 0px !important;
@@ -228,7 +230,7 @@
 
     .btn-back:hover {
         transition: ease-in 0.1s;
-        background-color: #1E88E5 !important;
+        background-color: rgba(91,160,100, 1) !important;
     }
 
 .btn-newReply {
